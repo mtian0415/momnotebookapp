@@ -9,7 +9,7 @@ class App extends Component {
     super(props);
     this.state =
     {
-      today: new Date(),
+      today: null,
       notes: []
     };
 
@@ -28,12 +28,29 @@ class App extends Component {
 
   addNote()
   {
-    alert('add note');
+    let notes = [{date: this.state.today, text: null}].concat(this.state.notes);
+    this.saveNote(notes);
+  }
+
+  saveNote(notes) {
+    //localStorage.setItem('notes', JSON.stringify(notes));
+    this.setState({notes: notes});
   }
 
   render() {
-    const noteContent =
+    let noteContent =
       <button onClick={this.addNote}> Add Note </button>;
+
+    for (let i = 0; i < this.state.notes.length; i++)
+    {
+      let note = this.state.notes[i];
+      if (note.date == this.state.today)
+      {
+        alert("found");
+        noteContent = <Form></Form>;
+        break;
+      }
+    }
 
     return (
       <div>
